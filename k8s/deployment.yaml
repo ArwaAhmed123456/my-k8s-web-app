@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: hayat126/my-app:latest 
+        image: hayat126/my-app:latest
         ports:
         - containerPort: 5000
-      imagePullSecrets:
-      - name: regcred
+
