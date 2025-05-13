@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "ArwaAhmed123456/my-k8s-web-app",
+  "pipelineDirectory": "my-k8s-web-app",
+  "workspaceDirectory": "my-k8s-web-app\\my-k8s-web-app",
+  "repositories": {
+    "ArwaAhmed123456/my-k8s-web-app": {
+      "repositoryPath": "my-k8s-web-app\\my-k8s-web-app",
+      "lastRunOn": "05/13/2025 15:40:58 +01:00"
+    }
+  },
+  "lastRunOn": "05/13/2025 15:51:23 +01:00"
+}

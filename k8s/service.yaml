@@ -2,11 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: socialecho-service
+  namespace: my-app-namespace  # Corrected here
+  labels:
+    app: socialecho
 spec:
-  selector:
-    app: my-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 5000
   type: NodePort
+  selector:
+    app: socialecho  # Keep this once
+  ports:
+    - port: 80
+      targetPort: 5000
+      nodePort: 30001
