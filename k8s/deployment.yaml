@@ -14,6 +14,8 @@ spec:
       labels:
         app: socialecho
     spec:
+      imagePullSecrets:
+        - name: myregistrykey  # Your Docker registry secret name
       containers:
       - name: socialecho
         image: hayat126/my-app:latest
