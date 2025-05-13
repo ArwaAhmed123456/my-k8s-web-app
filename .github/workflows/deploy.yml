@@ -1,4 +1,4 @@
-name: Local Deploy via Self-Hosted Runner
+name: Build and Deploy to Minikube
 
 on:
   push:
@@ -6,26 +6,31 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  
+    - name: Set up Docker to use Minikube's environment
+      run: |
+        echo "Configuring Docker to use Minikube's daemon..."
+        eval $(minikube docker-env)
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Build Docker image
+      run: |
+        docker build -t hayat126/my-app:latest .
 
-      - name: Run Tests (Optional)
-        run: npm test
-        continue-on-error: true  
+    - name: Login to Docker Hub
+      run: |
+        echo "DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}"
+        echo "DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}"
 
-      - name: Start App (Optional - e.g. dev mode)
-        run: |
-          npm run build || echo "No build step"
-          npm start || echo "No start script"
+    - name: Push Docker image to Docker Hub
+      run: docker push hayat126/my-app:latest
+
+    - name: Deploy to Minikube
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
