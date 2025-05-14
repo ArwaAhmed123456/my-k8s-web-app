@@ -14,8 +14,8 @@ jobs:
 
     - name: Set up Docker to use Minikube's environment
       run: |
-         echo "Configuring Docker to use Minikube's daemon..."
-         eval $(minikube docker-env)
+        echo "Configuring Docker to use Minikube's daemon..."
+        minikube docker-env | Invoke-Expression
 
     - name: Build Docker image
       run: |
@@ -40,4 +40,4 @@ jobs:
       run: kubectl get pods -n my-app-namespace
 
     - name: Check Pods Logs
-      run: kubectl logs -l app=my-app -n your-namespace
+      run: kubectl logs -l app=my-app -n my-app-namespace
